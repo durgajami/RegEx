@@ -1,0 +1,13 @@
+RegEx
+
+Lazy Match
+Lazy quantifiers:*?   +?   {n,m}?
+a.*?b a123b456b matches a123b
+
+Greedy Match
+Greedy quantifiers:*   +   {n,m}
+a.*b  a123b456b matches a123b456b
+
+Look ahead
+(abc)(?=.*xyz) Matches abc if there is xyz followed in the string
+(?=.*xyz)abc Matches abc if xyz anywhere in the string
