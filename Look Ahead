@@ -1,3 +1,57 @@
+## Look ahead any where in the string
+^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$
+^ → Start of string
+(?=.*[a-z]) → At least one lowercase
+(?=.*[A-Z]) → At least one uppercase
+(?=.*\d) → At least one digit
+(?=.*[\W_]) → At least one special character
+.{8,} → Minimum 8 characters
+$ → End of string
+
+## Negative Look Ahead
+(?!pattern)
+\d(?!px)  ###Matches digits not followed by px
+
+#Look Behind
+(?<=pattern)
+(?<=\$)\d+
+Matches 100 because $ is behind it
+
+(?<=\$)\d+(?:\.\d{2})?
+Matches
+$19.99
+$100
+
+#Negative Look Behind
+(?<!pattern)
+(?<!\$)\d+
+Matches numbers not preceded by $
+
+Example:
+$100USD
+(?<=\$)\d+(?=USD)
+Matches 100 because $ is behind & USD ahead
+
+#Capturing/Non Capturing group
+(cat|dog)      # capturing group to be used later as \1 \2 etc
+(?:cat|dog)s?  # Non Capturing Group matches Matches cat, cats, dog, dogs  ## ? at then end means 0 or 1 ## ?: avoid creating unnecessary groups
+
+\1 — Backreference inside the regex pattern
+(\w+)\s\1 -- Matchhes repeated words
+$1 used in replacement 
+Regex.Replace("Doe, John", @"(\w+), (\w+)", "$2 $1")
+
+
+## Conditional matching
+123-456-7890 
+4567890
+^(?:(\d{3})-)?(?(1)\d{3}-\d{4}|\d{7})$
+123 stored in 1
+^(?:(\d{3})-)? matches 123 0 or 1 times
+If 123 exists matches 456-7890, if 123 does not ext matched 4567890
+123-4567890 -fails, 1234567890 fails
+
+---------------------------------------------------------------------------
 RegEx
 
 Lazy Match
@@ -11,3 +65,4 @@ a.*b  a123b456b matches a123b456b
 Look ahead
 (abc)(?=.*xyz) Matches abc if there is xyz followed in the string
 (?=.*xyz)abc Matches abc if xyz anywhere in the string
+
